@@ -1,0 +1,565 @@
+<header class="sticky top-0 z-40 bg-stone-900/95 backdrop-blur-md text-white border-b border-stone-800 shadow-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-20">
+            <!-- Logo -->
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="resetFilters()">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-gold-500 to-amber-200 flex items-center justify-center text-stone-950 font-bold text-xl shadow-lg shadow-gold-500/20">
+                    R
+                </div>
+                <div>
+                    <span class="text-xl font-bold tracking-widest uppercase block leading-none">Revendia</span>
+                    <span class="text-[10px] text-gold-300 tracking-widest uppercase font-semibold">Parfums 60ml</span>
+                </div>
+            </div>
+
+            <!-- Desktop Search Bar -->
+            <div class="hidden md:flex flex-1 max-w-md mx-8 relative">
+                <input type="text" id="searchInput" onkeyup="handleSearch()" placeholder="Buscar perfume, marca o notas (ej: Sauvage, Vainilla, Dior)..." 
+                       class="w-full bg-stone-800 text-sm text-stone-100 placeholder-stone-400 rounded-xl py-2.5 pl-10 pr-4 focus:outline-none focus:ring-2 focus:ring-gold-500/50 border border-stone-700">
+                <i data-lucide="search" class="w-4 h-4 text-stone-400 absolute left-3.5 top-3"></i>
+            </div>
+
+            <!-- Cart Button -->
+            <div class="flex items-center space-x-3">
+                <button onclick="toggleCart()" class="relative p-2.5 rounded-xl bg-stone-800 hover:bg-stone-700 transition-all text-stone-200 flex items-center gap-2">
+                    <i data-lucide="shopping-bag" class="w-5 h-5"></i>
+                    <span class="text-xs font-semibold hidden sm:inline">Pedido</span>
+                    <span id="cartBadge" class="hidden absolute -top-1.5 -right-1.5 bg-gold-500 text-stone-950 font-extrabold text-xs w-5 h-5 rounded-full flex items-center justify-center border-2 border-stone-900">0</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Search Bar -->
+        <div class="pb-4 md:hidden relative">
+            <input type="text" id="searchInputMobile" onkeyup="handleSearchMobile()" placeholder="Buscar perfume, marca o notas..." 
+                   class="w-full bg-stone-800 text-sm text-stone-100 placeholder-stone-400 rounded-xl py-2.5 pl-10 pr-4 focus:outline-none focus:ring-2 focus:ring-gold-500/50 border border-stone-700">
+            <i data-lucide="search" class="w-4 h-4 text-stone-400 absolute left-3.5 top-5"></i>
+        </div>
+    </div>
+</header>
+
+<section class="bg-stone-900 text-white py-8 border-b border-stone-800 relative overflow-hidden">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-2 relative z-10">
+        <span class="px-3 py-1 bg-gold-500/10 border border-gold-500/30 rounded-full text-gold-300 text-xs uppercase tracking-widest font-semibold inline-block">
+            Extractos de Diseñador & Árabes (60 ML)
+        </span>
+        <h1 class="text-2xl md:text-3xl font-extrabold tracking-tight text-white">
+            Catálogo Completo de Fragancias
+        </h1>
+        <p class="text-stone-400 text-xs md:text-sm max-w-xl mx-auto">
+            Explora las notas aromáticas de cada perfume y arma tu pedido fácilmente.
+        </p>
+    </div>
+</section>
+
+<main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
+
+    <!-- CASILLAS DE FILTRO RÁPIDO POR SECCIÓN / GÉNERO -->
+    <div>
+        <h2 class="text-xs font-bold text-stone-400 uppercase tracking-widest mb-3 flex items-center gap-1.5">
+            <i data-lucide="grid" class="w-4 h-4 text-gold-500"></i>
+            1. Selección por Categoría
+        </h2>
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            <button id="btn-gender-all" onclick="setGenderFilter('all')" class="p-3.5 rounded-2xl border-2 border-gold-500 bg-white text-stone-900 shadow-sm transition-all flex flex-col items-center justify-center gap-1 font-bold text-xs md:text-sm text-center">
+                <i data-lucide="sparkles" class="w-5 h-5 text-gold-600"></i>
+                <span>Todos</span>
+            </button>
+            <button id="btn-gender-Masculino" onclick="setGenderFilter('Masculino')" class="p-3.5 rounded-2xl border-2 border-stone-200 hover:border-blue-300 bg-white text-stone-600 transition-all flex flex-col items-center justify-center gap-1 font-bold text-xs md:text-sm text-center">
+                <i data-lucide="shield" class="w-5 h-5 text-blue-600"></i>
+                <span>Masculinos</span>
+            </button>
+            <button id="btn-gender-Femenino" onclick="setGenderFilter('Femenino')" class="p-3.5 rounded-2xl border-2 border-stone-200 hover:border-pink-300 bg-white text-stone-600 transition-all flex flex-col items-center justify-center gap-1 font-bold text-xs md:text-sm text-center">
+                <i data-lucide="heart" class="w-5 h-5 text-pink-500"></i>
+                <span>Femeninos</span>
+            </button>
+            <button id="btn-gender-Árabe" onclick="setGenderFilter('Árabe')" class="p-3.5 rounded-2xl border-2 border-stone-200 hover:border-amber-400 bg-white text-stone-600 transition-all flex flex-col items-center justify-center gap-1 font-bold text-xs md:text-sm text-center">
+                <i data-lucide="crown" class="w-5 h-5 text-amber-500"></i>
+                <span>Extractos Árabes</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- CASILLAS DE FILTRO POR DISPONIBILIDAD (STOCK) -->
+    <div>
+        <h2 class="text-xs font-bold text-stone-400 uppercase tracking-widest mb-3 flex items-center gap-1.5">
+            <i data-lucide="check-circle" class="w-4 h-4 text-gold-500"></i>
+            2. Disponibilidad
+        </h2>
+        <div class="grid grid-cols-3 gap-3 max-w-lg">
+            <button id="btn-stock-all" onclick="setStockFilter('all')" class="py-2.5 px-3 rounded-xl border-2 border-stone-900 bg-stone-900 text-white font-bold text-xs transition-all text-center">
+                Todos
+            </button>
+            <button id="btn-stock-instock" onclick="setStockFilter('instock')" class="py-2.5 px-3 rounded-xl border-2 border-emerald-500/30 bg-emerald-50 text-emerald-800 font-bold text-xs hover:border-emerald-500 transition-all text-center flex items-center justify-center gap-1">
+                <span class="w-2 h-2 rounded-full bg-emerald-500"></span> En Stock
+            </button>
+            <button id="btn-stock-outstock" onclick="setStockFilter('outstock')" class="py-2.5 px-3 rounded-xl border-2 border-red-200 bg-red-50 text-red-800 font-bold text-xs hover:border-red-300 transition-all text-center flex items-center justify-center gap-1">
+                <span class="w-2 h-2 rounded-full bg-red-500"></span> Sin Stock
+            </button>
+        </div>
+    </div>
+
+    <!-- Encabezado de catálogo -->
+    <div class="flex items-center justify-between border-t border-stone-200 pt-6">
+        <div>
+            <h3 class="text-lg font-extrabold text-stone-900" id="currentSectionTitle">Mostrando Catálogo Completo</h3>
+            <p class="text-xs text-stone-500" id="productCount">Cargando catálogo...</p>
+        </div>
+        <button onclick="resetFilters()" class="text-xs text-gold-600 hover:text-gold-700 font-semibold underline flex items-center gap-1">
+            <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i> Restablecer filtros
+        </button>
+    </div>
+
+    <!-- Grilla de Productos -->
+    <div id="productsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+        <!-- JS dynamic content insertion -->
+    </div>
+
+    <!-- Empty State -->
+    <div id="noResults" class="hidden text-center py-16 bg-white rounded-3xl border border-stone-200">
+        <i data-lucide="search-x" class="w-12 h-12 text-stone-300 mx-auto mb-3"></i>
+        <h3 class="text-base font-bold text-stone-700">No encontramos perfumes con estos filtros</h3>
+        <p class="text-xs text-stone-500 mt-1">Intenta seleccionando otra opción o limpiando la búsqueda.</p>
+        <button onclick="resetFilters()" class="mt-4 px-4 py-2 bg-stone-900 text-white rounded-xl text-xs font-semibold hover:bg-stone-800 transition">Ver todo el catálogo</button>
+    </div>
+
+</main>
+
+<div id="cartOverlay" class="fixed inset-0 bg-stone-950/60 backdrop-blur-sm z-50 hidden opacity-0 transition-opacity duration-300" onclick="toggleCart()"></div>
+
+<aside id="cartDrawer" class="fixed right-0 top-0 h-full w-full max-w-md bg-white z-50 shadow-2xl flex flex-col transform translate-x-full transition-transform duration-300">
+    <div class="p-4 border-b border-stone-200 flex items-center justify-between bg-stone-900 text-white">
+        <div class="flex items-center space-x-2">
+            <i data-lucide="shopping-bag" class="w-5 h-5 text-gold-400"></i>
+            <h2 class="font-bold text-base">Mi Pedido de Perfumes (60ml)</h2>
+        </div>
+        <button onclick="toggleCart()" class="p-1 rounded-lg hover:bg-stone-800 transition text-stone-400 hover:text-white">
+            <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+    </div>
+
+    <div id="cartItems" class="flex-1 overflow-y-auto p-4 space-y-3 divide-y divide-stone-100">
+        <!-- JS dynamic insertion -->
+    </div>
+
+    <div class="p-4 border-t border-stone-200 bg-stone-50 space-y-4">
+        <div class="flex items-center justify-between text-base font-bold text-stone-900">
+            <span>Total Estimado:</span>
+            <span id="cartTotal" class="text-lg text-gold-600">$0</span>
+        </div>
+        
+        <p class="text-[11px] text-stone-500 leading-tight">
+            * Tu lista se formateará para enviarla directamente a nuestro WhatsApp para coordinar.
+        </p>
+
+        <button onclick="sendOrderWhatsApp()" id="checkoutBtn" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 px-4 rounded-xl shadow-lg shadow-emerald-600/20 flex items-center justify-center space-x-2 transition-all disabled:opacity-50 disabled:cursor-not-allowed">
+            <i data-lucide="message-square" class="w-5 h-5"></i>
+            <span>Enviar Pedido por WhatsApp</span>
+        </button>
+    </div>
+</aside>
+
+<footer class="bg-stone-900 text-stone-400 border-t border-stone-800 text-xs py-8 mt-auto">
+    <div class="max-w-7xl mx-auto px-4 text-center space-y-3">
+        <div class="flex items-center justify-center space-x-2 text-stone-200 font-bold text-sm">
+            <span>Revendia Parfums</span> • <span>60 ML</span>
+        </div>
+        <p class="max-w-md mx-auto text-stone-500">
+            Catálogo de Extractos de Diseñador y Árabes en frascos individuales de 60ml.
+        </p>
+        <p class="text-stone-600">© 2026 Revendia Parfums</p>
+    </div>
+</footer>
+
+<script>
+    const perfumePrice = 8500; 
+    const whatsappNumber = "5491100000000"; // Reemplazar por tu número real de WhatsApp
+
+    const perfumesData = [
+        // MASCULINOS
+        { name: "212 HEROES", brand: "CH", category: "Masculino", stock: false, notes: "Pera, Jengibre, Cannabis, Salvia, Almizcle" },
+        { name: "212 SEXY MEN", brand: "CH", category: "Masculino", stock: true, notes: "Vainilla, Mandarina, Pimienta Rosa, Madera de Sándalo" },
+        { name: "212 NYC", brand: "CH", category: "Masculino", stock: true, notes: "Notas Verdes, Cítricos, Especias, Almizcle Blanco" },
+        { name: "ACQUA DI GIO", brand: "ARMANI", category: "Masculino", stock: true, notes: "Lima, Notas Marinas, Jazmín, Cedro, Pachulí" },
+        { name: "ACQUA DI GIO PROFONDO", brand: "ARMANI", category: "Masculino", stock: false, notes: "Marinas, Bergamota, Romero, Ciprés, Ámbar" },
+        { name: "ALLURE SPORT", brand: "CHANNEL", category: "Masculino", stock: false, notes: "Naranja, Notas Marinas, Pimienta, Habita Tonka, Vainilla" },
+        { name: "AVENTUS", brand: "CREED", category: "Masculino", stock: true, notes: "Piña, Abedul ahumado, Bergamota, Almizcle, Grosellas" },
+        { name: "BACCARAT ROUGE 540", brand: "MAISON F. K.", category: "Masculino", stock: false, notes: "Azafrán, Jazmín, Madera de Ámbar, Cedro" },
+        { name: "BLUE SEDUCTION", brand: "A. BANDERAS", category: "Masculino", stock: true, notes: "Melón, Menta, Bergamota, Capuchino, Nuez Moscada" },
+        { name: "BLEU", brand: "CHANNEL", category: "Masculino", stock: false, notes: "Pomelo, Incienso, Jengibre, Menta, Cedro" },
+        { name: "BULGARY BLACK", brand: "BULGARY", category: "Masculino", stock: true, notes: "Té Negro, Cuero, Caucho, Vainilla, Ámbar" },
+        { name: "BLACK XS", brand: "RABANNE", category: "Masculino", stock: true, notes: "Limón, Cacao, Praliné, Canela, Ámbar Negro" },
+        { name: "BORN IN ROMA UOMO", brand: "VALENTINO", category: "Masculino", stock: false, notes: "Hojas de Violeta, Sal de Mar, Salvia, Jengibre, Guayaco" },
+        { name: "UOMO", brand: "VALENTINO", category: "Masculino", stock: false, notes: "Avellana, Café, Chocolate, Cuero, Bergamota" },
+        { name: "CHIC", brand: "CH", category: "Masculino", stock: true, notes: "Sandía, Cardamomo, Pimienta, Gamuza, Cedro" },
+        { name: "CK ONE", brand: "CALVIN KLEIN", category: "Masculino", stock: true, notes: "Limón, Piña, Té Verde, Papaya, Almizcle" },
+        { name: "AZZARO POUR HOMME", brand: "AZZARO", category: "Masculino", stock: true, notes: "Lavanda, Anís Estrella, Cuero, Musgo de Roble, Vetiver" },
+        { name: "CHROME", brand: "AZZARO", category: "Masculino", stock: true, notes: "Limón, Romero, Piña, Jazmín, Musgo de Roble" },
+        { name: "DILAN BLUE", brand: "VERSACE", category: "Masculino", stock: true, notes: "Bergamota, Toronja, Notas Acuáticas, Incienso, Pachulí" },
+        { name: "EROS", brand: "VERSACE", category: "Masculino", stock: true, notes: "Menta, Manzana Verde, Vainilla, Haba Tonka" },
+        { name: "ERBA PURA", brand: "XERJOFF", category: "Masculino", stock: true, notes: "Naranja Siciliana, Frutas Tropicales, Vainilla, Almizcle" },
+        { name: "ERBA GOLD", brand: "XERJOFF", category: "Masculino", stock: true, notes: "Limón de Calabria, Manzana, Cardamomo, Ámbar, Vainilla" },
+        { name: "DARK BLUE", brand: "HUGO BOSS", category: "Masculino", stock: true, notes: "Jengibre, Pomelo, Lima, Ciprés, Vainilla, Gamuza" },
+        { name: "INVICTUS", brand: "RABANNE", category: "Masculino", stock: true, notes: "Notas Marinas, Toronja, Hoja de Laurel, Jazmín, Ámbar Gris" },
+        { name: "INVICTUS PLATINUM", brand: "RABANNE", category: "Masculino", stock: true, notes: "Absenta, Toronja, Menta, Lavanda, Ciprés" },
+        { name: "INVICTUS INTENSE", brand: "RABANNE", category: "Masculino", stock: false, notes: "Flor de Azahar, Pimienta Negra, Whisky, Ámbar Gris" },
+        { name: "INVICTUS VICTORY", brand: "RABANNE", category: "Masculino", stock: true, notes: "Pimienta Rosa, Limón, Incienso, Vainilla, Haba Tonka" },
+        { name: "INVICTUS VICTORY ELIXIR", brand: "RABANNE", category: "Masculino", stock: true, notes: "Ámbar Intenso, Líbano, Cardamomo, Pimienta Negra, Vainilla" },
+        { name: "LE MALE", brand: "JPG", category: "Masculino", stock: true, notes: "Lavanda, Menta, Vainilla, Canela, Flor de Azahar" },
+        { name: "ULTRA MALE", brand: "JPG", category: "Masculino", stock: true, notes: "Pera, Menta, Lavanda, Canela, Vainilla Negra" },
+        { name: "LE MALE ELIXIR", brand: "JPG", category: "Masculino", stock: false, notes: "Miel, Tonka, Menta, Lavanda, Benjuí dulce" },
+        { name: "LE BEAU", brand: "JPG", category: "Masculino", stock: true, notes: "Coco, Bergamota, Haba Tonka, Madera Dulce" },
+        { name: "LAPIDUS POUR HOMME", brand: "LAPIDUS", category: "Masculino", stock: true, notes: "Piña, Miel, Incienso, Tabaco, Pino, Rosa" },
+        { name: "LEAU DISSEY", brand: "ISSEY MIYAKE", category: "Masculino", stock: true, notes: "Yuzu, Calone, Lirio de los Valles, Cedro, Sándalo" },
+        { name: "LIGHT BLUE", brand: "DG", category: "Masculino", stock: true, notes: "Toronja, Pimienta de Sichuan, Romero, Enebro, Almizcle" },
+        { name: "DOLCE", brand: "DG", category: "Masculino", stock: true, notes: "Flor de Papaya, Neroli, Lirio del Agua, Amaryllis" },
+        { name: "ONE MILLION", brand: "RABANNE", category: "Masculino", stock: false, notes: "Mandarina Roja, Canela, Rosa, Cuero, Ámbar, Especias" },
+        { name: "ONE MILLION GOLD", brand: "RABANNE", category: "Masculino", stock: false, notes: "Mandarina, Cardamomo Dulce, Madera Cálida, Canela" },
+        { name: "ONE MILLION INTENSE", brand: "RABANNE", category: "Masculino", stock: false, notes: "Azafrán, Pimienta Negra, Cardamomo, Rosa, Iris, Cuero" },
+        { name: "PARADISE GARDEN", brand: "JPG", category: "Masculino", stock: true, notes: "Menta Fresca, Coco Salado, Higo, Haba Tonka" },
+        { name: "BLUE JEAN", brand: "JPG", category: "Masculino", stock: true, notes: "Cítricos, Anís, Lavanda, Vainilla, Sándalo" },
+        { name: "PI", brand: "GIVENCHY", category: "Masculino", stock: true, notes: "Vainilla, Romero, Estragón, Benjuí, Almendra" },
+        { name: "PHANTOM", brand: "RABANNE", category: "Masculino", stock: true, notes: "Lavanda Electrizante, Limón Cítrico, Vainilla Dulce" },
+        { name: "POLO BLACK", brand: "RALPH LAUREN", category: "Masculino", stock: true, notes: "Mango Helado, Salvia, Pachulí Negro" },
+        { name: "POLO BLUE", brand: "RALPH LAUREN", category: "Masculino", stock: true, notes: "Pepino, Melón, Gamuza, Albahaca, Salvia, Almizcle" },
+        { name: "POLO SPORT", brand: "RALPH LAUREN", category: "Masculino", stock: true, notes: "Menta, Cítricos, Algas Marinas, Jengibre, Madera" },
+        { name: "SANTAL 33", brand: "LE LABO", category: "Masculino", stock: false, notes: "Sándalo, Cuero, Papiro, Cedro, Violeta, Cardamomo" },
+        { name: "SAUVAGE", brand: "DIOR", category: "Masculino", stock: true, notes: "Bergamota de Calabria, Pimienta Sichuan, Ambroxan, Lavanda" },
+        { name: "SAUVAGE ELIXIR", brand: "DIOR", category: "Masculino", stock: true, notes: "Canela, Nuez Moscada, Cardamomo, Lavanda, Regaliz" },
+        { name: "SCANDAL", brand: "JPG", category: "Masculino", stock: true, notes: "Caramelo, Salvia, Haba Tonka, Vetiver" },
+        { name: "THE MOST WANTED", brand: "AZZARO", category: "Masculino", stock: true, notes: "Cardamomo, Toffee Dulce, Madera de Ámbar, Caramelo" },
+        { name: "TOY BOY", brand: "MOSCHINO", category: "Masculino", stock: true, notes: "Pimienta Rosa, Rosa, Magnolia, Clavo de Olor, Cashmeran" },
+        { name: "ULTRAVIOLET MEN", brand: "RABANNE", category: "Masculino", stock: true, notes: "Menta, Ámbar Gris, Vetiver, Musgo de Roble" },
+        { name: "VERY IRRESISTIBLE", brand: "GIVENCHY", category: "Masculino", stock: true, notes: "Menta, Sésamo, Café, Pomelo" },
+        { name: "IMAGINATION", brand: "LOUIS VUITTON", category: "Masculino", stock: true, notes: "Té Negro de China, Cítricos de Calabria, Ambroxan, Jengibre" },
+        { name: "ARABIANS TONKA", brand: "MONTALE", category: "Masculino", stock: true, notes: "Azafrán, Bergamota, Oud, Rosa, Haba Tonka, Caña de Azúcar" },
+        { name: "OMBRE NOMADE", brand: "LOUIS VUITTON", category: "Masculino", stock: true, notes: "Madera de Oud, Frambuesa, Rosa, Incienso" },
+
+        // FEMENINOS
+        { name: "ANGEL OU DEMON", brand: "GIVENCHY", category: "Femenino", stock: true, notes: "Azafrán, Lirio, Orquídea, Vainilla, Palo de Rosa" },
+        { name: "ACQUA DI GIOIA", brand: "GIORGIO A.", category: "Femenino", stock: true, notes: "Menta Limón, Jazmín de Agua, Azúcar Moreno, Cedro" },
+        { name: "CLASSIQUE", brand: "JPG", category: "Femenino", stock: true, notes: "Flor de Azahar, Jengibre, Rosa, Vainilla, Ámbar" },
+        { name: "212 SEXY", brand: "CH", category: "Femenino", stock: true, notes: "Pimienta Rosa, Algodón de Azúcar, Vainilla, Almizcle" },
+        { name: "212 VIP", brand: "CH", category: "Femenino", stock: true, notes: "Ron, Fruta de la Pasión, Vainilla, Tonka, Almizcle" },
+        { name: "212 ON ICE", brand: "CH", category: "Femenino", stock: true, notes: "Flor de Azahar, Cítricos, Peonía, Sándalo" },
+        { name: "212 VIP ROSE", brand: "CH", category: "Femenino", stock: true, notes: "Champaña Rosada, Flor de Durazno, Notas Amaderadas" },
+        { name: "BE DELICIOUS", brand: "DONNA KARAN", category: "Femenino", stock: false, notes: "Manzana Verde, Pepino, Toronja, Magnolia, Violeta" },
+        { name: "BRIGHT CRISTAL", brand: "VERSACE", category: "Femenino", stock: true, notes: "Granada, Yuzu, Peonía, Lotus, Almizcle" },
+        { name: "CORO", brand: "XERJOFF", category: "Femenino", stock: true, notes: "Frutas Dulces, Jazmín, Orquídea, Vainilla, Ámbar" },
+        { name: "BURBERRY HER", brand: "BURBERRY", category: "Femenino", stock: true, notes: "Frutillas, Frambuesa, Grosella, Violeta, Jazmín, Vainilla" },
+        { name: "COCO MADEMOISELLLE", brand: "CHANEL", category: "Femenino", stock: true, notes: "Naranja, Jazmín, Rosa, Pachulí, Vainilla" },
+        { name: "FAMME", brand: "RABANNE", category: "Femenino", stock: true, notes: "Mango Juicy, Jazmín Brillante, Incienso Cremoso" },
+        { name: "GOODD GIRL", brand: "CH", category: "Femenino", stock: true, notes: "Almendra, Café, Jazmín Sambac, Cacao, Vainilla, Tonka" },
+        { name: "GOODD GIRL BLUSH", brand: "CH", category: "Femenino", stock: true, notes: "Bergamota, Peonía, Ylang-Ylang, Vainilla, Agua de Rosas" },
+        { name: "GOODD GIRL SUPREME", brand: "CH", category: "Femenino", stock: true, notes: "Berries, Jazmín Egyptian, Tonka, Vetiver" },
+        { name: "HALLOWEEN", brand: "JESUS DEL POZO", category: "Femenino", stock: true, notes: "Violeta, Notas Marinas, Lirio, Vainilla, Sándalo" },
+        { name: "J´ADORE WOMAN", brand: "DIOR", category: "Femenino", stock: true, notes: "Pera, Melón, Magnolia, Jazmín, Rosa, Ciruela" },
+        { name: "KENZO FLOWER", brand: "KENZO", category: "Femenino", stock: true, notes: "Amapola, Rosa de Bulgaria, Violeta, Vainilla, Almizcle" },
+        { name: "KENZO AMOR", brand: "KENZO", category: "Femenino", stock: true, notes: "Arroz, Té Blanco, Flor de Cerezo, Vainilla, Incienso" },
+        { name: "LADY MILLION", brand: "RABANNE", category: "Femenino", stock: true, notes: "Frambuesa, Neroli, Flor de Azahar, Miel, Pachulí" },
+        { name: "LA VIE EST BELLE", brand: "LANCOME", category: "Femenino", stock: true, notes: "Grosellas, Pera, Iris, Jazmín, Praliné, Vainilla" },
+        { name: "LIBRE", brand: "YSL", category: "Femenino", stock: true, notes: "Lavanda, Flor de Azahar, Mandarina, Vainilla de Madagascar" },
+        { name: "CLOUD", brand: "ARIANA GRANDE", category: "Femenino", stock: true, notes: "Lavanda, Pera, Crema de Coco, Praliné, Orquídea Vainilla" },
+        { name: "CAN CAN", brand: "PARIS HILTON", category: "Femenino", stock: true, notes: "Nectarina, Grosella Negra, Cítricos, Orquídea, Ámbar" },
+        { name: "NINA RICCI", brand: "NINA RICCI", category: "Femenino", stock: false, notes: "Manzana Confitada, Limón de Amalfi, Peonía, Vainilla" },
+        { name: "MY WAY", brand: "GIORGIO A.", category: "Femenino", stock: true, notes: "Flor de Azahar, Tuberosa, Jazmín, Vainilla de Bourbon" },
+        { name: "MISS DIOR (2021)", brand: "DIOR", category: "Femenino", stock: true, notes: "Lirio del Valle, Peonía, Iris, Rosa Centifolia, Vainilla" },
+        { name: "OLYMPEA", brand: "RABANNE", category: "Femenino", stock: true, notes: "Vainilla Salada, Jazmín de Agua, Flor de Jengibre, Ámbar Gris" },
+        { name: "POWER OF YOU", brand: "EMPORIO A.", category: "Femenino", stock: true, notes: "Frambuesa, Neroli, Rosa, Vainilla, Almizcle" },
+        { name: "POISON", brand: "DIOR", category: "Femenino", stock: true, notes: "Ciruela, Cilantro, Tuberosa, Canela, Miel, Incienso" },
+        { name: "PURE XS", brand: "RABANNE", category: "Femenino", stock: true, notes: "Ylang-Ylang, Palomitas de Maíz, Vainilla, Coco, Ámbar" },
+        { name: "RALPH (CELESTE)", brand: "RALPH LAUREN", category: "Femenino", stock: true, notes: "Manzana Verde, Freesia, Magnolia, Mandarina, Almizcle" },
+        { name: "ROCK", brand: "SHAKIRA", category: "Femenino", stock: true, notes: "Maracuyá, Bergamota, Jazmín, Flor de Azahar, Ámbar" },
+        { name: "SCANDAL", brand: "JPG", category: "Femenino", stock: true, notes: "Miel Dulce, Gardenia, Naranja Sanguínea, Pachulí" },
+        { name: "ULTRAVIOLE WOMAN", brand: "RABANNE", category: "Femenino", stock: true, notes: "Pimienta, Chiles, Violeta, Vainilla, Ámbar" },
+        { name: "VALENTINO DONNA", brand: "VALENTINO", category: "Femenino", stock: false, notes: "Rosa de Bulgaria, Iris, Cuero, Vainilla, Pachulí" },
+        { name: "VALENTINO EXTRA DOSE", brand: "VALENTINO", category: "Femenino", stock: true, notes: "Grosella Negra, Jazmín, Vainilla de Bourbon, Amaderado" },
+        { name: "WIND FLOWER", brand: "CREED", category: "Femenino", stock: true, notes: "Jazmín, Flor de Azahar, Durazno, Tuberosa, Praliné" },
+        { name: "VERY IRRESISTIBLE", brand: "GIVENCHY", category: "Femenino", stock: true, notes: "Rosas, Anís Estrella, Verbena" },
+        { name: "FANTASY", brand: "BRITNEY SPEARS", category: "Femenino", stock: true, notes: "Kiwi, Lichi, Cupcake Dulce, Orquídea, Chocolate Blanco" },
+        { name: "LEAU DISSEY", brand: "I. MIYAKE", category: "Femenino", stock: true, notes: "Loto, Freesia, Calone, Lirio del Valle, Peonía" },
+        { name: "LA BOMBA", brand: "CH", category: "Femenino", stock: true, notes: "Cereza Negra, Rosa de Damasco, Vainilla Dulce, Almendra" },
+
+        // EXTRACTOS ARABES
+        { name: "9 PM (M)", brand: "AFNAN", category: "Árabe", stock: true, notes: "Manzana, Canela, Lavanda, Vainilla, Haba Tonka, Ámbar" },
+        { name: "AMBER ROUGE", brand: "ORIENTICA", category: "Árabe", stock: true, notes: "Azafrán, Jazmín, Madera de Ámbar, Abeto, Ámbar Gris" },
+        { name: "AL HARAMAIN GOLD (M)", brand: "AL HARAMAIN", category: "Árabe", stock: false, notes: "Bergamota, Cítricos, Melón, Piña, Vainilla, Ámbar" },
+        { name: "ECLAIRE", brand: "LATTAFA", category: "Árabe", stock: true, notes: "Caramelo, Leche, Azúcar, Miel, Flor Blanca, Vainilla" },
+        { name: "BHARARA KING (M)", brand: "LATTAFA", category: "Árabe", stock: true, notes: "Naranja, Bergamota, Limón, Frutas, Vainilla, Ámbar, Almizcle" },
+        { name: "ODYSSEY MANDARYN SKY (M)", brand: "ARMAF", category: "Árabe", stock: false, notes: "Mandarina, Naranja, Caramelo, Haba Tonka, Salvia, Ámbar" },
+        { name: "YARA ROSA (F)", brand: "LATTAFA", category: "Árabe", stock: false, notes: "Orquídea, Acorde Gourmand, Frutas Tropicales, Vainilla, Almizcle" },
+        { name: "YARA ELIXIR", brand: "LATTAFA", category: "Árabe", stock: true, notes: "Grosella Negra, Jazmín, Caramelo, Vainilla, Sándalo" },
+        { name: "YARA CANDY", brand: "LATTAFA", category: "Árabe", stock: true, notes: "Gominolas, Fresa Dulce, Vainilla, Almizcle Rosa" },
+        { name: "ASAD BLACK", brand: "LATTAFA", category: "Árabe", stock: true, notes: "Pimienta Negra, Piña, Tabaco, Café, Patchouli, Vainilla" },
+        { name: "CLUB DE NUIT INTENSE MEN", brand: "ARMAF", category: "Árabe", stock: true, notes: "Limón, Piña, Grosella Negra, Abedul Ahumado, Almizcle" }
+    ];
+
+    let cart = [];
+    let activeGender = 'all';
+    let activeStock = 'all';
+    let searchQuery = '';
+
+    document.addEventListener('DOMContentLoaded', () => {
+        renderProducts();
+        updateCartUI();
+    });
+
+    function setGenderFilter(gender) {
+        activeGender = gender;
+        ['all', 'Masculino', 'Femenino', 'Árabe'].forEach(g => {
+            const btn = document.getElementById(`btn-gender-${g}`);
+            if (btn) {
+                if (g === gender) {
+                    btn.className = "p-3.5 rounded-2xl border-2 border-gold-500 bg-white text-stone-900 shadow-md font-bold text-xs md:text-sm text-center flex flex-col items-center justify-center gap-1";
+                } else {
+                    btn.className = "p-3.5 rounded-2xl border-2 border-stone-200 bg-white text-stone-600 hover:border-stone-300 transition-all font-semibold text-xs md:text-sm text-center flex flex-col items-center justify-center gap-1";
+                }
+            }
+        });
+        renderProducts();
+    }
+
+    function setStockFilter(stockType) {
+        activeStock = stockType;
+        
+        const btnAll = document.getElementById('btn-stock-all');
+        const btnIn = document.getElementById('btn-stock-instock');
+        const btnOut = document.getElementById('btn-stock-outstock');
+
+        btnAll.className = stockType === 'all' ? "py-2.5 px-3 rounded-xl border-2 border-stone-900 bg-stone-900 text-white font-bold text-xs transition-all text-center" : "py-2.5 px-3 rounded-xl border-2 border-stone-200 bg-white text-stone-600 font-bold text-xs hover:border-stone-300 transition-all text-center";
+        btnIn.className = stockType === 'instock' ? "py-2.5 px-3 rounded-xl border-2 border-emerald-600 bg-emerald-600 text-white font-bold text-xs transition-all text-center flex items-center justify-center gap-1" : "py-2.5 px-3 rounded-xl border-2 border-emerald-500/30 bg-emerald-50 text-emerald-800 font-bold text-xs hover:border-emerald-500 transition-all text-center flex items-center justify-center gap-1";
+        btnOut.className = stockType === 'outstock' ? "py-2.5 px-3 rounded-xl border-2 border-red-600 bg-red-600 text-white font-bold text-xs transition-all text-center flex items-center justify-center gap-1" : "py-2.5 px-3 rounded-xl border-2 border-red-200 bg-red-50 text-red-800 font-bold text-xs hover:border-red-300 transition-all text-center flex items-center justify-center gap-1";
+
+        renderProducts();
+    }
+
+    function handleSearch() {
+        searchQuery = document.getElementById('searchInput').value.toLowerCase();
+        renderProducts();
+    }
+
+    function handleSearchMobile() {
+        searchQuery = document.getElementById('searchInputMobile').value.toLowerCase();
+        renderProducts();
+    }
+
+    function resetFilters() {
+        activeGender = 'all';
+        activeStock = 'all';
+        searchQuery = '';
+        document.getElementById('searchInput').value = '';
+        document.getElementById('searchInputMobile').value = '';
+        setGenderFilter('all');
+        setStockFilter('all');
+    }
+
+    function renderProducts() {
+        const grid = document.getElementById('productsGrid');
+        const noResults = document.getElementById('noResults');
+        const countLabel = document.getElementById('productCount');
+        const sectionTitle = document.getElementById('currentSectionTitle');
+
+        let titleText = "Perfumes";
+        if (activeGender === 'Masculino') titleText = "Perfumes Masculinos";
+        else if (activeGender === 'Femenino') titleText = "Perfumes Femeninos";
+        else if (activeGender === 'Árabe') titleText = "Extractos Árabes";
+
+        if (activeStock === 'instock') titleText += " (En Stock)";
+        if (activeStock === 'outstock') titleText += " (Sin Stock)";
+
+        sectionTitle.textContent = titleText;
+
+        const filtered = perfumesData.filter(item => {
+            const matchesGender = (activeGender === 'all') || (item.category === activeGender);
+            const matchesStock = (activeStock === 'all') || 
+                                 (activeStock === 'instock' && item.stock) || 
+                                 (activeStock === 'outstock' && !item.stock);
+            const matchesSearch = item.name.toLowerCase().includes(searchQuery) || 
+                                 item.brand.toLowerCase().includes(searchQuery) ||
+                                 item.notes.toLowerCase().includes(searchQuery);
+            return matchesGender && matchesStock && matchesSearch;
+        });
+
+        countLabel.textContent = `Mostrando ${filtered.length} de ${perfumesData.length} perfumes en total`;
+
+        if (filtered.length === 0) {
+            grid.innerHTML = '';
+            noResults.classList.remove('hidden');
+            return;
+        }
+
+        noResults.classList.add('hidden');
+
+        grid.innerHTML = filtered.map((perfume) => {
+            const stockBadge = perfume.stock 
+                ? `<span class="bg-emerald-100 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded-full border border-emerald-300/50 flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> EN STOCK</span>`
+                : `<span class="bg-red-100 text-red-800 text-[10px] font-bold px-2 py-0.5 rounded-full border border-red-300/50 flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-red-500"></span> SIN STOCK</span>`;
+
+            const genderColor = perfume.category === 'Masculino' ? 'from-slate-900 to-blue-950' : 
+                                perfume.category === 'Femenino' ? 'from-stone-900 to-pink-950' : 'from-amber-950 to-stone-900';
+
+            return `
+                <div class="bg-white rounded-2xl overflow-hidden border border-stone-200 shadow-sm hover:shadow-lg transition-all duration-300 flex flex-col justify-between ${!perfume.stock ? 'opacity-75 bg-stone-50/50' : ''}">
+                    <div class="bg-gradient-to-r ${genderColor} p-4 text-white flex items-center justify-between">
+                        <div>
+                            <span class="text-[10px] font-bold text-gold-300 uppercase tracking-widest block leading-none mb-1">${perfume.brand}</span>
+                            <h3 class="font-extrabold text-white text-sm leading-tight">${perfume.name}</h3>
+                        </div>
+                        <span class="text-[10px] font-bold bg-white/10 px-2 py-1 rounded-md backdrop-blur-sm border border-white/10 text-stone-200">
+                            60ml
+                        </span>
+                    </div>
+
+                    <div class="p-4 flex-1 flex flex-col justify-between space-y-3">
+                        <div class="space-y-2">
+                            <div class="flex items-center justify-between text-xs">
+                                <span class="text-stone-500 font-medium">${perfume.category}</span>
+                                ${stockBadge}
+                            </div>
+
+                            <div class="bg-stone-50 p-2.5 rounded-xl border border-stone-100 text-[11px] space-y-0.5">
+                                <span class="font-bold text-stone-700 block text-[10px] uppercase tracking-wider text-gold-600 flex items-center gap-1">
+                                    <i data-lucide="sparkles" class="w-3 h-3"></i> Notas Olfativas:
+                                </span>
+                                <p class="text-stone-600 leading-snug font-medium">${perfume.notes}</p>
+                            </div>
+                        </div>
+
+                        <div class="pt-2 border-t border-stone-100 flex items-center justify-between">
+                            <div>
+                                <span class="text-[10px] text-stone-400 block leading-none">Precio</span>
+                                <span class="text-base font-extrabold text-stone-900">$${perfumePrice.toLocaleString('es-AR')}</span>
+                            </div>
+                            ${perfume.stock ? `
+                                <button onclick="addToCart('${perfume.name.replace(/'/g, "\\'")}', '${perfume.brand}', '${perfume.category}')" class="px-3 py-2 bg-stone-900 hover:bg-gold-500 hover:text-stone-950 text-white text-xs font-bold rounded-xl transition-all flex items-center space-x-1 shadow-md active:scale-95">
+                                    <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+                                    <span>Agregar</span>
+                                </button>
+                            ` : `
+                                <button disabled class="px-3 py-2 bg-stone-200 text-stone-400 text-xs font-bold rounded-xl cursor-not-allowed">
+                                    Agotado
+                                </button>
+                            `}
+                        </div>
+                    </div>
+                </div>
+            `;
+        }).join('');
+
+        lucide.createIcons();
+    }
+
+    function addToCart(name, brand, category) {
+        const existing = cart.find(c => c.name === name);
+        if (existing) {
+            existing.quantity += 1;
+        } else {
+            cart.push({ name, brand, category, quantity: 1 });
+        }
+
+        updateCartUI();
+        
+        const drawer = document.getElementById('cartDrawer');
+        if (drawer.classList.contains('translate-x-full')) {
+            toggleCart();
+        }
+    }
+
+    function changeQuantity(name, delta) {
+        const item = cart.find(c => c.name === name);
+        if (!item) return;
+
+        item.quantity += delta;
+        if (item.quantity <= 0) {
+            cart = cart.filter(c => c.name !== name);
+        }
+
+        updateCartUI();
+    }
+
+    function updateCartUI() {
+        const badge = document.getElementById('cartBadge');
+        const cartContainer = document.getElementById('cartItems');
+        const totalLabel = document.getElementById('cartTotal');
+        const checkoutBtn = document.getElementById('checkoutBtn');
+
+        const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+        const totalPrice = totalItems * perfumePrice;
+
+        if (totalItems > 0) {
+            badge.textContent = totalItems;
+            badge.classList.remove('hidden');
+            checkoutBtn.disabled = false;
+        } else {
+            badge.classList.add('hidden');
+            checkoutBtn.disabled = true;
+        }
+
+        totalLabel.textContent = `$${totalPrice.toLocaleString('es-AR')}`;
+
+        if (cart.length === 0) {
+            cartContainer.innerHTML = `
+                <div class="text-center py-12 text-stone-400 space-y-2">
+                    <i data-lucide="shopping-bag" class="w-12 h-12 mx-auto stroke-1 text-stone-300"></i>
+                    <p class="text-xs font-semibold text-stone-600">Tu pedido está vacío</p>
+                    <p class="text-[11px] text-stone-400">Toca en "Agregar" en los perfumes disponibles para armar tu encargo.</p>
+                </div>
+            `;
+        } else {
+            cartContainer.innerHTML = cart.map(item => `
+                <div class="flex items-center justify-between py-2.5">
+                    <div class="flex-1 pr-3">
+                        <h4 class="font-bold text-xs text-stone-900">${item.name}</h4>
+                        <p class="text-[10px] text-stone-500">${item.brand} • ${item.category} (60ml)</p>
+                        <span class="text-xs font-extrabold text-gold-600">$${(perfumePrice * item.quantity).toLocaleString('es-AR')}</span>
+                    </div>
+                    
+                    <div class="flex items-center space-x-1.5 bg-stone-100 rounded-lg p-1 border border-stone-200">
+                        <button onclick="changeQuantity('${item.name.replace(/'/g, "\\'")}', -1)" class="w-5 h-5 rounded bg-white text-stone-800 flex items-center justify-center text-xs font-bold shadow-sm hover:bg-stone-200">-</button>
+                        <span class="text-xs font-bold px-1.5 text-stone-800">${item.quantity}</span>
+                        <button onclick="changeQuantity('${item.name.replace(/'/g, "\\'")}', 1)" class="w-5 h-5 rounded bg-white text-stone-800 flex items-center justify-center text-xs font-bold shadow-sm hover:bg-stone-200">+</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        lucide.createIcons();
+    }
+
+    function toggleCart() {
+        const overlay = document.getElementById('cartOverlay');
+        const drawer = document.getElementById('cartDrawer');
+
+        if (drawer.classList.contains('translate-x-full')) {
+            overlay.classList.remove('hidden');
+            setTimeout(() => overlay.classList.remove('opacity-0'), 10);
+            drawer.classList.remove('translate-x-full');
+        } else {
+            drawer.classList.add('translate-x-full');
+            overlay.classList.add('opacity-0');
+            setTimeout(() => overlay.classList.add('hidden'), 300);
+        }
+    }
+
+    function sendOrderWhatsApp() {
+        if (cart.length === 0) return;
+
+        let message = "¡Hola! Quiero realizar un encargo de perfumes de 60ml (Revendia Parfums):\n\n";
+        let total = 0;
+
+        cart.forEach((item, index) => {
+            const subtotal = item.quantity * perfumePrice;
+            total += subtotal;
+            message += `${index + 1}. *${item.name}* (${item.brand})\n`;
+            message += `   • Categoría: ${item.category}\n`;
+            message += `   • Cantidad: ${item.quantity}\n`;
+            message += `   • Subtotal: $${subtotal.toLocaleString('es-AR')}\n\n`;
+        });
+
+        message += `*TOTAL ESTIMADO: $${total.toLocaleString('es-AR')}*\n\n`;
+        message += "¿Me confirman disponibilidad para coordinar la entrega?";
+
+        const encodedMessage = encodeURIComponent(message);
+        window.open(`https://wa.me/${whatsappNumber}?text=${encodedMessage}`, '_blank');
+    }
+</script>
